@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using AngleSharp.Html.Parser;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
@@ -57,8 +56,6 @@ namespace TimelistBot
         static string GetTimelist()
         {
             string html = HtmlDownloader.DownloadHtml(path);
-
-            List<string> tableTags = new List<string>();
 
             HtmlParser parser = new HtmlParser();
 

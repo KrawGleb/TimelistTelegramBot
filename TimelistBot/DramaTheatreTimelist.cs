@@ -11,29 +11,39 @@ namespace TimelistBot
     class DramaTheatreTimelist : ITimelist
     {
         const string imgPath = "https://bresttheatre.info/assets/teatr/img/%D1%80%D0%B5%D0%BF%D0%B5%D1%80%D1%82%D1%83%D0%B0%D1%80%D0%BD%D0%B0%D1%8F%20%D0%B0%D1%84%D0%B8%D1%88%D0%B0/%D1%80%D0%B5%D0%BF%D0%B5%D1%80%D1%82%D1%83%D0%B0%D1%80%20%D0%A4%D0%95%D0%92%D0%A0%D0%90%D0%9B%D0%AC%202021.jpg";
-        const string savePath = @"D:\Lessons\А\TimelistBot\TimelistBot\ImgTimelists\DramaTheatre\timelist.jpg";
-        const string resizerPath = @"D:\Lessons\А\TimelistBot\TimelistBot\ImgTimelists\DramaTheatre\compressedTimelist.jpg";
+        static string savePath = Environment.CurrentDirectory + "\\img\\DramaTheatreTimelist\\timelist.jpg";
+        static string resizerPath = Environment.CurrentDirectory + "\\img\\DramaTheatreTimelist\\compressedTimelist.jpg";
         public async void SendTimelist(CallbackQueryEventArgs callback)
         {
-            await Clients.botClient.SendTextMessageAsync(
+            try
+            {
+                await Clients.botClient.SendTextMessageAsync(
                 chatId: callback.CallbackQuery.Message.Chat.Id,
                 text: "Это может занять некоторое время..."
                 );
-            GetTimelist();
-            Resize();
-            var inlineKeyboard = new InlineKeyboardMarkup(
-                new InlineKeyboardButton()
-                {
-                    Text = "Обновить",
-                    CallbackData = "Update"
-                }
-                 );
+                GetTimelist();
+                Resize();
+                var inlineKeyboard = new InlineKeyboardMarkup(
+                    new InlineKeyboardButton()
+                    {
+                        Text = "Обновить",
+                        CallbackData = "Update"
+                    }
+                     );
 
-            await Clients.botClient.SendPhotoAsync(
-                chatId: callback.CallbackQuery.Message.Chat.Id,
-                photo: new InputOnlineFile(new FileStream(resizerPath, FileMode.Open)),
-                caption: "Актуально на: " + DateTime.Now,
-                replyMarkup: inlineKeyboard);
+                await Clients.botClient.SendPhotoAsync(
+                    chatId: callback.CallbackQuery.Message.Chat.Id,
+                    photo: new InputOnlineFile(new FileStream(resizerPath, FileMode.Open)),
+                    caption: "Актуально на: " + DateTime.Now,
+                    replyMarkup: inlineKeyboard);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("Somthing is wrong...");
+                Console.WriteLine(exc.Message);
+                SendErrorMessage(callback);
+            }
+            
         }
 
         public async void UpdateTimelist(CallbackQueryEventArgs callback)
@@ -66,12 +76,12 @@ namespace TimelistBot
 
                 Console.WriteLine("Updating is done.");
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 Console.WriteLine("Updating error.");
-                Console.WriteLine(exc.Message);
+                throw new Exception(exc.Message);
             }
-            
+
         }
 
         static void GetTimelist()
@@ -82,10 +92,10 @@ namespace TimelistBot
                 Clients.webClient.DownloadFile(imgPath, savePath);
                 Console.WriteLine("Download is succeful.");
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
-                Console.WriteLine("Download is failed.");
-                Console.WriteLine(exc.Message);
+                Console.WriteLine("Download error.");
+                throw new Exception(exc.Message);
             }
         }
 
@@ -109,12 +119,18 @@ namespace TimelistBot
                 }
                 Console.WriteLine("Resize is succeful.");
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 Console.WriteLine("Resize error.");
-                Console.WriteLine(exc.Message);
+                throw new Exception(exc.Message);
             }
-            
+        }
+
+        static async void SendErrorMessage(CallbackQueryEventArgs callback)
+        {
+            await Clients.botClient.SendTextMessageAsync(
+                callback.CallbackQuery.Message.Chat.Id,
+                text: "Что-то пошло не так. Попробуйте снова ");
         }
     }
 }

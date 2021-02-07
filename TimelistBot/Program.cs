@@ -11,7 +11,7 @@ namespace TimelistBot
         static ITimelist targetTimelist;
         static void Main(string[] args)
         {
-            string TOKEN = "YourToken";
+            string TOKEN = "1302268641:AAF4QtLhE78WpTGSN5BgKU_GRv-U_p2tPaA";
             Clients.botClient = new TelegramBotClient(TOKEN);
 
             Clients.webClient = new WebClient();

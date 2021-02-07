@@ -1,0 +1,17 @@
+D:\Lessons\А\TimelistBot\TimelistBot\obj\Debug\TimelistBot.csprojAssemblyReference.cache
+D:\Lessons\А\TimelistBot\TimelistBot\obj\Debug\TimelistBot.csproj.CoreCompileInputs.cache
+D:\Lessons\А\TimelistBot\TimelistBot\bin\Debug\TimelistBot.exe.config
+D:\Lessons\А\TimelistBot\TimelistBot\bin\Debug\TimelistBot.exe
+D:\Lessons\А\TimelistBot\TimelistBot\bin\Debug\TimelistBot.pdb
+D:\Lessons\А\TimelistBot\TimelistBot\bin\Debug\AngleSharp.dll
+D:\Lessons\А\TimelistBot\TimelistBot\bin\Debug\Newtonsoft.Json.dll
+D:\Lessons\А\TimelistBot\TimelistBot\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\Lessons\А\TimelistBot\TimelistBot\bin\Debug\System.Text.Encoding.CodePages.dll
+D:\Lessons\А\TimelistBot\TimelistBot\bin\Debug\Telegram.Bot.dll
+D:\Lessons\А\TimelistBot\TimelistBot\bin\Debug\AngleSharp.xml
+D:\Lessons\А\TimelistBot\TimelistBot\bin\Debug\Newtonsoft.Json.xml
+D:\Lessons\А\TimelistBot\TimelistBot\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\Lessons\А\TimelistBot\TimelistBot\bin\Debug\Telegram.Bot.xml
+D:\Lessons\А\TimelistBot\TimelistBot\obj\Debug\TimelistBot.csproj.CopyComplete
+D:\Lessons\А\TimelistBot\TimelistBot\obj\Debug\TimelistBot.exe
+D:\Lessons\А\TimelistBot\TimelistBot\obj\Debug\TimelistBot.pdb

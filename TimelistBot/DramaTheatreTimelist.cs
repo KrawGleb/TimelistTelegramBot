@@ -62,17 +62,18 @@ namespace TimelistBot
                      );
 
 
-                await Clients.botClient.EditMessageCaptionAsync(
-                    callback.CallbackQuery.Message.Chat.Id,
-                    callback.CallbackQuery.Message.MessageId,
-                    caption: "Актуально на: " + DateTime.Now,
-                    replyMarkup: inlineKeyboard);
 
                 await Clients.botClient.EditMessageMediaAsync(
                     callback.CallbackQuery.Message.Chat.Id,
                     callback.CallbackQuery.Message.MessageId,
                     media: new InputMediaPhoto(new InputMedia(new FileStream(resizerPath, FileMode.Open), "compressedTimelist"))
                     );
+
+                await Clients.botClient.EditMessageCaptionAsync(
+                    callback.CallbackQuery.Message.Chat.Id,
+                    callback.CallbackQuery.Message.MessageId,
+                    caption: "Актуально на: " + DateTime.Now,
+                    replyMarkup: inlineKeyboard);
 
                 Console.WriteLine("Updating is done.");
             }

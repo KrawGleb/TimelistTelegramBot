@@ -66,19 +66,27 @@ namespace TimelistBot
             {
                 string nextLine = "";
                 i++;
-                nextLine = new String(item.TextContent.Where(ch => ch != '\n').ToArray());
-                if (i % 2 == 0)
+                if (!(item.TextContent.IndexOf("КатОК") >= 0))
                 {
-                    nextLine += "\n";
+                    nextLine = new String(item.TextContent.Where(ch => ch != '\n').ToArray());
+                    if (i % 2 == 0)
+                    {
+                        nextLine += "\n";
 
+                    }
+                    else
+                    {
+                        nextLine = "*" + nextLine + "*";
+                    }
+                    nextLine += "\n";
+                    timeTable += nextLine;
                 }
                 else
                 {
-                    nextLine = "*" + nextLine + "*";
+                    continue;
                 }
-                nextLine += "\n";
-                timeTable += nextLine;
             }
+            // Console.WriteLine(timeTable);
 
             return timeTable;
         }

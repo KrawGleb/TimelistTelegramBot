@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using NLog;
+
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.InputFiles;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -10,7 +12,8 @@ namespace TimelistBot
 {
     class DramaTheatreTimelist : ITimelist
     {
-        const string imgPath = "https://bresttheatre.info/assets/teatr/img/%D1%80%D0%B5%D0%BF%D0%B5%D1%80%D1%82%D1%83%D0%B0%D1%80%D0%BD%D0%B0%D1%8F%20%D0%B0%D1%84%D0%B8%D1%88%D0%B0/%D1%80%D0%B5%D0%BF%D0%B5%D1%80%D1%82%D1%83%D0%B0%D1%80%20%D0%A4%D0%95%D0%92%D0%A0%D0%90%D0%9B%D0%AC%202021.jpg";
+        const string imgPath = "https://bresttheatre.Trace/assets/teatr/img/%D1%80%D0%B5%D0%BF%D0%B5%D1%80%D1%82%D1%83%D0%B0%D1%80%D0%BD%D0%B0%D1%8F%20%D0%B0%D1%84%D0%B8%D1%88%D0%B0/%D1%80%D0%B5%D0%BF%D0%B5%D1%80%D1%82%D1%83%D0%B0%D1%80%20%D0%A4%D0%95%D0%92%D0%A0%D0%90%D0%9B%D0%AC%202021.jpg";
+        static Logger logger = LogManager.GetCurrentClassLogger();
         static string savePath = Environment.CurrentDirectory + "\\img\\DramaTheatreTimelist\\timelist.jpg";
         static string resizerPath = Environment.CurrentDirectory + "\\img\\DramaTheatreTimelist\\compressedTimelist.jpg";
         public async void SendTimelist(CallbackQueryEventArgs callback)
@@ -18,7 +21,7 @@ namespace TimelistBot
             long chatId = callback.CallbackQuery.Message.Chat.Id;
             try
             {
-                Bot.SendMessage(chatId, "Это может занять некоторое время...");
+                Bot.SendMessageAsync(chatId, "Это может занять некоторое время...");
 
                 DownloadTimelist();
                 ResizeImage();
@@ -32,12 +35,13 @@ namespace TimelistBot
 
                 var photo = new InputOnlineFile(new FileStream(resizerPath, FileMode.Open));
                 string caption = "Актуально на " + DateTime.Now;
-                Bot.SendPhoto(chatId, photo, caption, inlineKeyboard);
+                Bot.SendPhotoAsync(chatId, photo, caption, inlineKeyboard);
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Ошибка отправки расписания");
-                Console.WriteLine(exc.Message);
+                logger.Error("Ошибка отправки расписания");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
                 SendErrorMessage(callback);
             }
 
@@ -49,7 +53,7 @@ namespace TimelistBot
             int messageId = callback.CallbackQuery.Message.MessageId;
             try
             {
-                Console.WriteLine("Обновление началось");
+                logger.Trace("Update has begun");
                 DownloadTimelist();
                 ResizeImage();
 
@@ -62,13 +66,12 @@ namespace TimelistBot
                      );
 
                 var media = new InputMediaPhoto(new InputMedia(new FileStream(resizerPath, FileMode.Open), "compressedTimelist"));
-                Bot.EditMessageMedia(chatId, messageId, media);
+                Bot.EditMessageMediaAsync(chatId, messageId, media);
 
-                Console.WriteLine("Updating is done.");
+                logger.Trace("Updating is done");
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Updating error.");
                 throw new Exception(exc.Message);
             }
 
@@ -76,15 +79,14 @@ namespace TimelistBot
 
         static void DownloadTimelist()
         {
-            Console.WriteLine("Downloading a picture began... ");
+            logger.Trace("Downloading a picture began");
             try
             {
                 Web.webClient.DownloadFile(imgPath, savePath);
-                Console.WriteLine("Download is succeful.");
+                logger.Trace("Download is succeful.");
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Download error.");
                 throw new Exception(exc.Message);
             }
         }
@@ -94,7 +96,7 @@ namespace TimelistBot
         {
             try
             {
-                Console.WriteLine("Resizing began...");
+                logger.Trace("Resizing began");
                 using (FileStream startStream = new FileStream(savePath, FileMode.Open), destStream = new FileStream(resizerPath, FileMode.OpenOrCreate))
                 {
                     ImageBuilder.Current.Build(
@@ -107,18 +109,20 @@ namespace TimelistBot
                             )
                         );
                 }
-                Console.WriteLine("Resize is succeful.");
+                logger.Trace("Resize is succeful");
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Resize error.");
+                logger.Error("Resize error");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
                 throw new Exception(exc.Message);
             }
         }
 
         static async void SendErrorMessage(CallbackQueryEventArgs callback)
         {
-            Bot.SendMessage(callback.CallbackQuery.Message.Chat.Id, "Что-то пошло не так. Попробуйте снова");
+            Bot.SendMessageAsync(callback.CallbackQuery.Message.Chat.Id, "Что-то пошло не так. Попробуйте снова");
         }
     }
 }

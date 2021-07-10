@@ -23,7 +23,7 @@ namespace TimelistBot
             long chatId = callback.CallbackQuery.Message.Chat.Id;
             string text = GetTimelist();
 
-            Bot.SendMessage(chatId, text, inlineKeyboard);
+            Bot.SendMessageAsync(chatId, text, inlineKeyboard);
         }
 
         public void UpdateTimelist(CallbackQueryEventArgs callback)
@@ -40,7 +40,7 @@ namespace TimelistBot
             long chatId = callback.CallbackQuery.Message.Chat.Id;
             int messageId = callback.CallbackQuery.Message.MessageId;
             
-            Bot.EditMessageText(chatId, messageId, freshTimelist, inlineKeyboard);
+            Bot.EditMessageTextAsync(chatId, messageId, freshTimelist, inlineKeyboard);
             Console.WriteLine("Updated message with id: " + callback.CallbackQuery.Message.MessageId);
         }
 

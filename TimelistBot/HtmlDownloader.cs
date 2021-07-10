@@ -1,21 +1,25 @@
 ﻿using System;
+using NLog;
 
 namespace TimelistBot
 {
     static class HtmlDownloader
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public static string DownloadHtml(string path)
         {
-            Console.WriteLine("Downloading began...");
+            logger.Trace("Downloading began");
             string html = String.Empty;
             try
             {
                 html = Web.webClient.DownloadString(path);
-                Console.WriteLine("Download is succeful.");
+                logger.Trace("Download is succeful");
             }
-            catch
+            catch (Exception exc)
             {
-                Console.WriteLine("Download is failed.");
+                logger.Error("Download is failed");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
             }
 
             return html;

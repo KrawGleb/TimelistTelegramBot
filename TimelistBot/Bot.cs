@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 
 using Telegram.Bot;
 using Telegram.Bot.Args;
@@ -13,8 +14,9 @@ namespace TimelistBot
     {
         private const string TOKEN = "1302268641:AAF4QtLhE78WpTGSN5BgKU_GRv-U_p2tPaA";
         private static ITelegramBotClient botClient = new TelegramBotClient(TOKEN);
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public static ITimelist targetTimelist;
-
+        
         static Bot()
         {
             botClient.OnMessage += TextMessageHandler;
@@ -58,7 +60,7 @@ namespace TimelistBot
                             }
                     }
                     );
-                Bot.SendMessage(chatId, text, replyMarkup);
+                Bot.SendMessageAsync(chatId, text, replyMarkup);
             }
         }
         static void CallbackQueryHandler(object sender, CallbackQueryEventArgs callback)
@@ -84,9 +86,14 @@ namespace TimelistBot
             }
         }
 
-        public static async void SendMessage(long chatId, string text, ParseMode parseMode = ParseMode.Markdown)
+        public static async void SendMessageAsync(long chatId, string text, ParseMode parseMode = ParseMode.Markdown)
         {
-            Console.WriteLine("Отправка сообщения...");
+            if (text == "")
+            {
+                logger.Warn("Empty message rejected");
+                return;
+            }
+            logger.Trace("Message sending");
             try
             {
                 await botClient.SendTextMessageAsync(
@@ -97,14 +104,20 @@ namespace TimelistBot
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Отправка не удалась");
-                Console.WriteLine(exc.Message);
+                logger.Error("Message sending error");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
             }
-            Console.WriteLine("Сообщение отправленно");
+            logger.Trace("Message sent");
         }
-        public static async void SendMessage(long chatId, string text, InlineKeyboardMarkup replyMarkup, ParseMode parseMode = ParseMode.Markdown)
+        public static async void SendMessageAsync(long chatId, string text, InlineKeyboardMarkup replyMarkup, ParseMode parseMode = ParseMode.Markdown)
         {
-            Console.WriteLine("Отправка сообщения...");
+            if (text == "")
+            {
+                logger.Warn("Empty message rejected");
+                return;
+            }
+            logger.Trace("Message sending");
             try
             {
                 await botClient.SendTextMessageAsync(
@@ -116,15 +129,43 @@ namespace TimelistBot
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Отправка не удалась");
-                Console.WriteLine(exc.Message);
+                logger.Error("Message sending error");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
+
             }
-            Console.WriteLine("Сообщение отправленно");
+            logger.Trace("Message sent");
         }
 
-        public static async void SendPhoto(long chatId, InputOnlineFile photo)
+        public static void SendMessage(long chatId, string text, InlineKeyboardMarkup replyMarkup, ParseMode parseMode = ParseMode.Markdown)
         {
-            Console.WriteLine("Отправка фото...");
+            if (text == "")
+            {
+                logger.Warn("Empty message rejected");
+                return;
+            }
+            logger.Trace("Message sending");
+            try
+            {
+                botClient.SendTextMessageAsync(
+                chatId: chatId,
+                 text: text,
+                 replyMarkup: replyMarkup,
+                 parseMode: parseMode
+                 );
+            }
+            catch (Exception exc)
+            {
+                logger.Error("Message sending failed");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
+            }
+            logger.Trace("Message sent");
+        }
+
+        public static async void SendPhotoAsync(long chatId, InputOnlineFile photo)
+        {
+            logger.Trace("Photo sending");
             try
             {
                 await botClient.SendPhotoAsync(
@@ -134,14 +175,15 @@ namespace TimelistBot
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Отправка не удалась");
-                Console.WriteLine(exc.Message);
+                logger.Error("Photo sending failed");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
             }
-            Console.WriteLine("Фото отправлено");
+            logger.Trace("Photo sent");
         }
-        public static async void SendPhoto(long chatId, InputOnlineFile photo, InlineKeyboardMarkup replyMarkup)
+        public static async void SendPhotoAsync(long chatId, InputOnlineFile photo, InlineKeyboardMarkup replyMarkup)
         {
-            Console.WriteLine("Отправка фото...");
+            logger.Trace("Photo sending");
             try
             {
                 await botClient.SendPhotoAsync(
@@ -152,14 +194,15 @@ namespace TimelistBot
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Отправка не удалась");
-                Console.WriteLine(exc.Message);
+                logger.Error("Photo sending failed");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
             }
-            Console.WriteLine("Фото отправлено");
+            logger.Trace("Photo sending");
         }
-        public static async void SendPhoto(long chatId, InputOnlineFile photo, string caption, InlineKeyboardMarkup replyMarkup)
+        public static async void SendPhotoAsync(long chatId, InputOnlineFile photo, string caption, InlineKeyboardMarkup replyMarkup)
         {
-            Console.WriteLine("Отправка фото...");
+            logger.Trace("Photo sending");
             try
             {
                 await botClient.SendPhotoAsync(
@@ -171,14 +214,16 @@ namespace TimelistBot
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Отправка не удалась");
-                Console.WriteLine(exc.Message);
+                logger.Error("Photo sending error");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
+
             }
-            Console.WriteLine("Фото отправлено");
+            logger.Trace("Photo sent");
         }
-        public static async void SendPhoto(long chatId, InputOnlineFile photo, string caption)
+        public static async void SendPhotoAsync(long chatId, InputOnlineFile photo, string caption)
         {
-            Console.WriteLine("Отправка фото...");
+            logger.Trace("Photo sending");
             try
             {
                 await botClient.SendPhotoAsync(
@@ -189,15 +234,16 @@ namespace TimelistBot
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Отправка не удалась");
-                Console.WriteLine(exc.Message);
+                logger.Error("Photo sending failed");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
             }
-            Console.WriteLine("Фото отправлено");
+            logger.Trace("Photo sent");
         }
 
-        public static async void EditMessageMedia(long chatId, int messageId, InputMediaBase media)
+        public static async void EditMessageMediaAsync(long chatId, int messageId, InputMediaBase media)
         {
-            Console.WriteLine("Изменение медиа сообщения");
+            logger.Trace("Editing message media");
             try
             {
                 await botClient.EditMessageMediaAsync(
@@ -208,14 +254,15 @@ namespace TimelistBot
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Ошибка изменения медиа");
-                Console.WriteLine(exc.Message);
+                logger.Error("Editing message error");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
             }
-            Console.WriteLine("Медиа изменено");
+            logger.Trace("Media edited");
         }
-        public static async void EditMessageMedia(long chatId, int messageId, InputMediaBase media, InlineKeyboardMarkup replyMarkup)
+        public static async void EditMessageMediaAsync(long chatId, int messageId, InputMediaBase media, InlineKeyboardMarkup replyMarkup)
         {
-            Console.WriteLine("Изменение медиа сообщения");
+            logger.Trace("Editing message media");
             try
             {
                 await botClient.EditMessageMediaAsync(
@@ -227,14 +274,15 @@ namespace TimelistBot
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Ошибка изменения медиа");
-                Console.WriteLine(exc.Message);
+                logger.Error("Editing message error");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
             }
-            Console.WriteLine("Медиа изменено");
+            logger.Trace("Media edited");
         }
-        public static async void EditMessageText(long chatId, int messageId, string text, ParseMode parseMode = ParseMode.Markdown)
+        public static async void EditMessageTextAsync(long chatId, int messageId, string text, ParseMode parseMode = ParseMode.Markdown)
         {
-            Console.WriteLine("Изменение текста сообщения");
+            logger.Trace("Editing message text");
             try
             {
                 await botClient.EditMessageTextAsync(
@@ -245,16 +293,17 @@ namespace TimelistBot
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Не удалось изменить текст сообщения");
-                Console.WriteLine(exc.Message);
+                logger.Error("Editing message text error");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
             }
-            Console.WriteLine("Текст изменён");
+            logger.Trace("Message text edited");
         }
-        public static async void EditMessageText(long chatId, int messageId, string text, InlineKeyboardMarkup replyMarkup, ParseMode parseMode = ParseMode.Markdown)
+        public static async void EditMessageTextAsync(long chatId, int messageId, string text, InlineKeyboardMarkup replyMarkup, ParseMode parseMode = ParseMode.Markdown)
         {
-            Console.WriteLine("Изменение текста сообщения");
+            logger.Trace("Editing message text");
             try
-            {   
+            {
                 await botClient.EditMessageTextAsync(
                 chatId: chatId,
                 messageId: messageId,
@@ -264,14 +313,15 @@ namespace TimelistBot
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Не удалось изменить текст сообщения");
-                Console.WriteLine(exc.Message);
+                logger.Error("Editing message text error");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
             }
-            Console.WriteLine("Текст изменён");
+            logger.Trace("Text edited");
         }
-        public static async void EditMessageCaption(long chatId, int messageId, string caption)
+        public static async void EditMessageCaptionAsync(long chatId, int messageId, string caption)
         {
-            Console.WriteLine("Изменение подписи");
+            logger.Trace("Editing message caption");
             try
             {
                 await botClient.EditMessageCaptionAsync(
@@ -282,9 +332,11 @@ namespace TimelistBot
             }
             catch (Exception exc)
             {
-                Console.WriteLine("Ошибка изменения");
-                Console.WriteLine(exc.Message);
+                logger.Error("Editing message caption error");
+                logger.Error(exc.Message);
+                logger.Error(exc.StackTrace);
             }
+            logger.Trace("Caption edited");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using NLog;
 
 namespace TimelistBot
 {
@@ -6,8 +7,9 @@ namespace TimelistBot
     {
         static void Main(string[] args)
         {
+            Logger logger = LogManager.GetCurrentClassLogger();
             Bot.Start();
-            Console.WriteLine("Press any key to exit");
+            logger.Trace("Press any key to exit");
             Console.ReadLine();
         }
     }

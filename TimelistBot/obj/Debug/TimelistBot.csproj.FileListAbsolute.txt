@@ -55,3 +55,11 @@ D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\obj\Debug\TimelistBot.cspro
 D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\obj\Debug\TimelistBot.csproj.CopyComplete
 D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\obj\Debug\TimelistBot.exe
 D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\obj\Debug\TimelistBot.pdb
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\NLog.config
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\NLog.dll
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\System.Buffers.dll
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\NLog.xml
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\System.Buffers.xml
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\System.Text.Encoding.CodePages.xml
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\System.Threading.Tasks.Extensions.xml

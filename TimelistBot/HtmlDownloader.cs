@@ -10,7 +10,7 @@ namespace TimelistBot
             string html = String.Empty;
             try
             {
-                html = Clients.webClient.DownloadString(path);
+                html = Web.webClient.DownloadString(path);
                 Console.WriteLine("Download is succeful.");
             }
             catch

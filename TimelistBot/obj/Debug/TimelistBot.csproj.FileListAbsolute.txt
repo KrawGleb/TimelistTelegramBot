@@ -36,3 +36,22 @@ D:\Lessons\Изучение C#\Projects\TimelistTelegramBot\TimelistBot\obj\Debu
 D:\Lessons\Изучение C#\Projects\TimelistTelegramBot\TimelistBot\obj\Debug\TimelistBot.csproj.CopyComplete
 D:\Lessons\Изучение C#\Projects\TimelistTelegramBot\TimelistBot\obj\Debug\TimelistBot.exe
 D:\Lessons\Изучение C#\Projects\TimelistTelegramBot\TimelistBot\obj\Debug\TimelistBot.pdb
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\TimelistBot.exe.config
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\TimelistBot.exe
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\TimelistBot.pdb
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\AngleSharp.dll
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\ImageResizer.dll
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\Newtonsoft.Json.dll
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\System.Text.Encoding.CodePages.dll
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\Telegram.Bot.dll
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\AngleSharp.xml
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\ImageResizer.xml
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\Newtonsoft.Json.xml
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\bin\Debug\Telegram.Bot.xml
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\obj\Debug\TimelistBot.csprojAssemblyReference.cache
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\obj\Debug\TimelistBot.csproj.CoreCompileInputs.cache
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\obj\Debug\TimelistBot.csproj.CopyComplete
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\obj\Debug\TimelistBot.exe
+D:\Lessons\GitClones\TimelistTelegramBot\TimelistBot\obj\Debug\TimelistBot.pdb
